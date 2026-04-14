@@ -1,0 +1,101 @@
+﻿@page
+@model IndexModel
+@{
+	ViewData["Title"] = "Погода в Москве";
+}
+
+<section class="weather-shell" data-theme="day" id="weatherShell" data-api-base-url="@Model.ApiBaseUrl">
+	<div class="weather-shell__content">
+		<header class="hero">
+			<div class="hero__copy">
+				<p class="hero__eyebrow">Погодный дашборд</p>
+				<h1 class="hero__title">Москва</h1>
+				<p class="hero__subtitle">
+					Текущая погода, оставшиеся часы сегодняшнего дня, полный почасовой прогноз на завтра и обзор на ближайшие три дня.
+				</p>
+			</div>
+
+			<button class="action-button action-button--ghost" id="refreshButton" type="button">
+				Обновить
+			</button>
+		</header>
+		<p class="inline-error" id="errorInline" hidden></p>
+
+		<div class="status-panel" id="loadingState" role="status" aria-live="polite">
+			<div class="spinner" aria-hidden="true"></div>
+			<div>
+				<h2 class="status-panel__title">Загружаем прогноз</h2>
+				<p class="status-panel__text">Запрашиваем текущую погоду и прогноз для Москвы.</p>
+			</div>
+		</div>
+
+		<div class="dashboard" id="weatherContent" hidden>
+			<section class="current-card">
+				<div class="current-card__main">
+					<div class="current-card__headline">
+						<div>
+							<p class="current-card__eyebrow" id="locationName">Москва</p>
+							<h2 class="current-card__local-time" id="localTimeLabel">Загрузка...</h2>
+						</div>
+
+						<div class="current-card__temperature-row">
+							<div class="current-card__temperature" id="currentTemperature">--°</div>
+							<img class="current-card__icon" id="currentIcon" alt="" hidden />
+						</div>
+					</div>
+
+					<p class="current-card__condition" id="currentCondition">Загрузка условий...</p>
+				</div>
+
+				<div class="current-card__details">
+					<article class="metric-card">
+						<p class="metric-card__label">Ощущается как</p>
+						<p class="metric-card__value" id="feelsLikeValue">--°</p>
+					</article>
+
+					<article class="metric-card">
+						<p class="metric-card__label">Влажность</p>
+						<p class="metric-card__value" id="humidityValue">--%</p>
+					</article>
+
+					<article class="metric-card">
+						<p class="metric-card__label">Ветер</p>
+						<p class="metric-card__value" id="windValue">-- км/ч</p>
+					</article>
+
+					<article class="metric-card metric-card--wide">
+						<p class="metric-card__label">Обновление</p>
+						<p class="metric-card__value" id="updatedAtValue">Загрузка...</p>
+					</article>
+				</div>
+			</section>
+
+			<section class="forecast-section">
+				<div class="section-heading">
+					<div>
+						<p class="section-heading__eyebrow">Почасовой прогноз</p>
+						<h2 class="section-heading__title">Остаток дня и весь завтрашний день</h2>
+					</div>
+					<p class="section-heading__note">Список прокручивается по горизонтали.</p>
+				</div>
+
+				<div class="hourly-grid" id="hourlyForecast"></div>
+			</section>
+
+			<section class="forecast-section">
+				<div class="section-heading">
+					<div>
+						<p class="section-heading__eyebrow">Прогноз на 3 дня</p>
+						<h2 class="section-heading__title">Краткий обзор ближайших дней</h2>
+					</div>
+				</div>
+
+				<div class="daily-grid" id="dailyForecast"></div>
+			</section>
+		</div>
+	</div>
+</section>
+
+@section Scripts {
+	<script src="~/js/weather-dashboard.js" asp-append-version="true"></script>
+}
